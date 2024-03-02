@@ -1,59 +1,89 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Feather, Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import colors from "@/constants/colors";
+import { View } from "react-native";
+import {
+  GameBold,
+  GameOutline,
+  HomeBold,
+  HomeOutline,
+  ProfileBold,
+  ProfileOutline,
+  RewardBold,
+  RewardOutline,
+} from "@/assets/icons";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const TabsLayout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.gray,
+          headerTitle: "",
+          tabBarStyle: {
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+          },
         }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="home"
+          options={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarIcon: ({ focused, color }) =>
+              focused ? (
+                <HomeBold size={34} color={color} />
+              ) : (
+                <HomeOutline size={34} color={color} />
+              ),
+          }}
+        />
+        <Tabs.Screen
+          name="game"
+          options={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarIcon: ({ focused, color }) =>
+              focused ? (
+                <GameBold size={34} color={color} />
+              ) : (
+                <GameOutline size={34} color={color} />
+              ),
+          }}
+        />
+        <Tabs.Screen
+          name="rank"
+          options={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarIcon: ({ focused, color }) =>
+              focused ? (
+                <RewardBold size={34} color={color} />
+              ) : (
+                <RewardOutline size={34} color={color} />
+              ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarIcon: ({ focused, color }) =>
+              focused ? (
+                <ProfileBold size={34} color={color} />
+              ) : (
+                <ProfileOutline size={34} color={color} />
+              ),
+          }}
+        />
+      </Tabs>
+    </GestureHandlerRootView>
   );
-}
+};
+export default TabsLayout;
